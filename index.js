@@ -63,7 +63,6 @@ app.listen(PORT, async () => {
 
     const DOS_URL_ONE = `http://localhost:${PORT}/dos.json`;
     const DOS_URL_TWO = `http://localhost:${PORT}/_dos.json`;
-    const RVM_LOG = path.resolve(process.env.LOCALAPPDATA, 'OpenFin/logs/rvm.log');
 
     await setRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings', DOS_URL_ONE, 'REG_SZ');
 
