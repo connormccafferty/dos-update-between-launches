@@ -1,0 +1,43 @@
+{
+    "applicationSettings": {
+        "MyPolicies": {
+            "urls": [
+                "http://localhost:5555/app.json"
+            ],
+            "permissions": {
+                "Application": {
+                    "setFileDownloadLocation": false,
+                    "getFileDownloadLocation": false
+                },
+                "System": {
+                    "downloadAsset": false,
+                    "launchExternalProcess": false,
+                    "readRegistryValue": true,
+                    "openUrlWithBrowser": true
+                },
+                "webAPIs": [
+                    "geolocation",
+                    "fullscreen"
+                ]
+            }
+        },
+        "default": {
+            "permissions": {
+                "Application": {
+                    "setFileDownloadLocation": false,
+                    "getFileDownloadLocation": false
+                },
+                "System": {
+                    "downloadAsset": false,
+                    "launchExternalProcess": false,
+                    "readRegistryValue": true,
+                    "openUrlWithBrowser": true
+                },
+                "webAPIs": [
+                    "geolocation",
+                    "fullscreen"
+                ]
+            }
+        }
+    }
+}

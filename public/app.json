@@ -1,0 +1,37 @@
+{
+    "devtools_port": 9090,
+    "startup_app": {
+        "name": "dos-repro",
+        "url": "http://localhost:5555/",
+        "uuid": "dos-repro",
+        "autoShow": true,
+        "permissions": {
+            "Application": {
+                "setFileDownloadLocation": true,
+                "getFileDownloadLocation": true
+            },
+            "System": {
+                "downloadAsset": true,
+                "launchExternalProcess": true,
+                "readRegistryValue": true,
+                "openUrlWithBrowser": true,
+                "terminateExternalProcess": true,
+                "enableNativeWindowIntegrationProvider": true,
+                "registerCustomProtocol": true,
+                "unregisterCustomProtocol": true,
+                "getCustomProtocolState": true
+            },
+            "webAPIs": [
+                "audio",
+                "video",
+                "notifications",
+                "geolocation",
+                "fullscreen"
+            ]
+        }
+    },
+    "runtime": {
+        "version": "canary",
+        "arguments": "--inspect --v=1"
+    }
+}

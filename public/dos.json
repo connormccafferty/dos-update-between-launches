@@ -1,0 +1,53 @@
+{
+    "applicationSettings": {
+        "MyPolicies": {
+            "urls": [
+                "http://localhost:5555/app.json"
+            ],
+            "permissions": {
+                "Application": {
+                    "setFileDownloadLocation": true,
+                    "getFileDownloadLocation": true
+                },
+                "System": {
+                    "downloadAsset": true,
+                    "launchExternalProcess": true,
+                    "readRegistryValue": true,
+                    "terminateExternalProcess": true,
+                    "enableNativeWindowIntegrationProvider": true,
+                    "registerCustomProtocol": true,
+                    "unregisterCustomProtocol": true,
+                    "getCustomProtocolState": true
+                },
+                "webAPIs": [
+                    "audio",
+                    "video",
+                    "notifications"
+                ]
+            }
+        },
+        "default": {
+            "permissions": {
+                "Application": {
+                    "setFileDownloadLocation": true,
+                    "getFileDownloadLocation": true
+                },
+                "System": {
+                    "downloadAsset": true,
+                    "launchExternalProcess": true,
+                    "readRegistryValue": true,
+                    "terminateExternalProcess": true,
+                    "enableNativeWindowIntegrationProvider": true,
+                    "registerCustomProtocol": true,
+                    "unregisterCustomProtocol": true,
+                    "getCustomProtocolState": true
+                },
+                "webAPIs": [
+                    "audio",
+                    "video",
+                    "notifications"
+                ]
+            }
+        }
+    }
+}

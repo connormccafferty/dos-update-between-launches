@@ -1,0 +1,63 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>app</title>
+</head>
+<body>
+    <h1 id="version"></h1>
+    <h1 id="reg"></h1>
+    <textarea id="permissions" rows="100" cols="100"></textarea>
+    <script>
+        fin.desktop.main(async () => {
+            const versionEl = document.getElementById('version');
+            const ofVersion = await fin.System.getVersion();
+            versionEl.textContent = `OpenFin Runtime Version: ${ofVersion}`;
+
+            const regEl = document.getElementById('reg');
+            try {
+                const { data } = await fin.System.readRegistryValue('HKEY_CURRENT_USER', 'Software\\OpenFin\\RVM\\Settings\\', 'DesktopOwnerSettings');
+                regEl.textContent = `HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings ${data}`;
+            } catch (e) {
+                regEl.textContent = e.message;
+            }
+
+            const queries = [
+                'Application.getFileDownloadLocation',
+                'Application.getFileDownloadLocation',
+                'Application.setFileDownloadLocation',
+                'Application.setFileDownloadLocation',
+                'System.downloadAsset',
+                'System.downloadAsset',
+                'System.enableNativeWindowIntegrationProvider',
+                'System.getCustomProtocolState',
+                'System.launchExternalProcess',
+                'System.launchExternalProcess',
+                'System.openUrlWithBrowser',
+                'System.readRegistryValue',
+                'System.readRegistryValue',
+                'System.registerCustomProtocol',
+                'System.terminateExternalProcess',
+                'System.unregisterCustomProtocol',
+                'webAPIs.audio',
+                'webAPIs.video',
+                'webAPIs.notifications',
+                'webAPIs.geolocation',
+                'webAPIs.fullscreen'
+            ];
+
+            const results = [];
+
+            for (let i = 0; i < queries.length; i++) {
+                const res = await fin.System.queryPermissionForCurrentContext(queries[i]);
+                results.push(res);
+            }
+
+            const permissionsEl = document.getElementById('permissions');
+            permissionsEl.value = JSON.stringify(results, null, 4);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "dos-update-between-launches",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@openfin/node-adapter": "^38.83.79",
+    "express": "^4.21.1"
+  }
+}
