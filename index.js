@@ -1,5 +1,6 @@
 const { exec } = require('node:child_process');
 const path = require('node:path');
+const fs = require('node:fs');
 const express = require('express');
 const { launch, connect } = require('@openfin/node-adapter');
 
@@ -30,6 +31,17 @@ async function delRegistryKey(keyPath) {
     });
 }
 
+function extractGetDesktopOwnerSettingsPayload() {
+    const rvmLogPath = path.resolve(process.env.LOCALAPPDATA, 'OpenFin/logs/rvm.log');
+    const log = fs.readFileSync(rvmLogPath, 'utf-8');
+    const match = /{.*{"action":"get-desktop-owner-settings".*"payload".*}/.exec(log)[0];
+
+    const msg = JSON.parse(match);
+
+    console.log('get-desktop-owner-settings payload: ');
+    console.log(JSON.stringify(msg, null, 4));
+}
+
 async function waitFor(ms) {
     console.log(`Waiting for ${ms} milliseconds...`);
     await new Promise(r => setTimeout(r, ms));
@@ -51,6 +63,7 @@ app.listen(PORT, async () => {
 
     const DOS_URL_ONE = `http://localhost:${PORT}/dos.json`;
     const DOS_URL_TWO = `http://localhost:${PORT}/_dos.json`;
+    const RVM_LOG = path.resolve(process.env.LOCALAPPDATA, 'OpenFin/logs/rvm.log');
 
     await setRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings', DOS_URL_ONE, 'REG_SZ');
 
@@ -67,6 +80,8 @@ app.listen(PORT, async () => {
     
     await waitFor(2000);
 
+    extractGetDesktopOwnerSettingsPayload();
+
     try {
         console.log(`Quitting application, shutting down RVM`)
         await fin.Application.wrapSync({ uuid: 'dos-repro' }).quit();
@@ -74,8 +89,8 @@ app.listen(PORT, async () => {
         
     }
     
-    await delRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings');
-    // await setRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings', DOS_URL_TWO, 'REG_SZ');
+    // await delRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings');
+    await setRegistryKey('HKEY_CURRENT_USER\\Software\\OpenFin\\RVM\\Settings\\DesktopOwnerSettings', DOS_URL_TWO, 'REG_SZ');
     await waitFor(2000);
 
     console.log(`Launching application with DesktopOwnerSettings: ${DOS_URL_TWO}`);
@@ -86,6 +101,10 @@ app.listen(PORT, async () => {
         address: `ws://localhost:${WS_PORT_TWO}`,
         nonPersistent: true
     });
+
+    await waitFor(2000);
+
+    extractGetDesktopOwnerSettingsPayload();
 
     fin.once('disconnected', process.exit);
 });
